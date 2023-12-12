@@ -23,14 +23,23 @@ public class Sketch extends PApplet {
    * Called repeatedly, anything drawn to the screen goes here
    */
   public void draw() {
-	  
-	// sample code, delete this stuff
-    stroke(128);
-    line(150, 25, 270, 350);  
 
-    stroke(255);
-    line(50, 125, 70, 50);  
   }
   
-  // define other methods down here.
+  public void mouseDragged() {
+    drawGrass(mouseX, mouseY, 20, 20);
+  }
+  
+  /**
+   * Draws grass where the mouse is dragged
+   * @param intX
+   * @param intY
+   * @param intWidth
+   * @param intHeight
+   */
+  public void drawGrass(int intX, int intY, int intWidth, int intHeight) {
+    fill(66, 245, 96);
+    ellipse(intX, intY, intWidth, intHeight);
+  }
+
 }

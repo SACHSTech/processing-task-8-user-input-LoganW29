@@ -16,34 +16,54 @@ public class Sketch extends PApplet {
    * values here i.e background, stroke, fill etc.
    */
   public void setup() {
-    background(12, 122, 232);
+    changeBackground(12, 122, 232);
   }
+
+
+  boolean blnLeftPressed = false; 
+  boolean blnRightPressed = false; 
+  float butterflyX = 200;
+  float butterflyY = 200;
 
   /**
    * Called repeatedly, anything drawn to the screen goes here
    */
   
    public void draw() {
+    
     if (drawClouds == true) {
       for (int i = 10; i < width; i += 90){
       drawCloud(i, 40);
       }
-    }
-    
+    } 
+    handleMovement();
+    drawButterfly(butterflyX, butterflyY);
   }
 
   public void keyReleased() {
     if (keyCode == UP) {
       drawClouds = false;
     }
+
+    if (keyCode == LEFT) {
+        blnLeftPressed = false;
+    } else if (keyCode == RIGHT) {
+        blnRightPressed = false;
+    }
+
   }
   
   public void mousePressed() {
     drawFlower(mouseX, mouseY);
+
+  }
+
+
+  public void mouseDragged() {
+    drawGrass(mouseX, mouseY);
   }
 
   public void keyPressed() {
-
     // Change background colour if the 'B' or 'b' key is pressed 
     if (key == 'B' || key == 'b') {
     changeBackground(28, 52, 115);
@@ -52,8 +72,42 @@ public class Sketch extends PApplet {
     if (keyCode == UP) {
       drawClouds = true;
     } 
-    
+       if (keyCode == LEFT) {
+      blnLeftPressed = true;
+    } else if (keyCode == RIGHT) {
+      blnRightPressed = true;
+    }
   }   
+
+  public void handleMovement() {
+    if (blnLeftPressed) {
+      butterflyX--;
+    }
+  
+    if (blnRightPressed) {
+      butterflyX++;
+    }
+  }
+  
+  public void drawButterfly(float butterflyX2, float butterflyY2) {
+   
+    stroke(0);
+
+    fill(154, 110, 230);
+    ellipse(butterflyX2 + 5, butterflyY2 + 20, 25, 30);
+    ellipse(butterflyX2 - 20, butterflyY2 + 20, 25, 30);
+
+    fill(189, 34, 168);
+    ellipse(butterflyX2 + 5, butterflyY2, 20, 30);
+    ellipse(butterflyX2 - 20, butterflyY2, 20, 30);
+
+    fill(83, 27, 168);
+    ellipse(butterflyX2 - 7, butterflyY2 + 5, 10, 50);
+  }
+
+
+
+
   /**
    * Changes the background if a key is pressed 
    * @param intR determines red 
@@ -85,10 +139,6 @@ public class Sketch extends PApplet {
 
   }
 
-  public void mouseDragged() {
-    drawGrass(mouseX, mouseY);
-
-  }
    
   /**
    * Draws grass where the mouse is dragged
@@ -106,7 +156,7 @@ public class Sketch extends PApplet {
 
   boolean drawClouds = false;
  
-  public void drawCloud(int intX, int intY){
+  public void drawCloud(int intX, int intY) {
     
     if (keyCode == UP){
     noStroke();
@@ -117,6 +167,6 @@ public class Sketch extends PApplet {
     ellipse(intX - 5, intY, 30, 30);
     }
   }
-
+  
 
 }

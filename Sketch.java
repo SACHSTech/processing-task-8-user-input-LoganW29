@@ -10,13 +10,12 @@ public class Sketch extends PApplet {
    * Called once at the beginning of execution, the size call 
    */
   public void settings() {
-	// size call 
+	  // size call 
     size(400, 400);
   }
 
   /** 
-   * Called once at the beginning of execution. Initial set up
-   * values, i.e background, stroke, fill etc.
+   * Called once at the beginning of execution. Initial set up values, i.e background, stroke, fill etc.
    */
   public void setup() {
     background(12, 122, 232);
@@ -28,47 +27,58 @@ public class Sketch extends PApplet {
   float butterflyY = 200;
 
   /**
-   * Called repeatedly, anything drawn to the screen goes here
-   */
-   public void draw() {
-        
+  * Called repeatedly, anything drawn to the screen goes here
+  */
+  public void draw() {
+    // For the butterfly
     if (blnLeftPressed) {
       butterflyX--;
     }
-  
     if (blnRightPressed) {
       butterflyX++;
     }
     drawButterfly(butterflyX, butterflyY);
 
+    // For the clouds
     if (drawClouds == true) {
       for (int i = 10; i < width; i += 90){
         drawCloud(i, 40);
       }
     } 
-   
+    
+    // For the fence 
     if (keyPressed && key != 'b' && key != 'B' && keyCode != UP && keyCode != LEFT && keyCode != RIGHT){
       for(int i = 0; i < width; i += 30){
         drawFence(i, 320);
       }
       for(int i = 360; i < height; i += 20){
-      drawFence(0, i);
+        drawFence(0, i);
       }
+    }
+
+    // For the mushroom 
+    if (mousePressed){
+      drawMushroom(300, 300);
     }
   }
 
+  /**
+  * Handles the key release events. 
+  * If the UP key is released, it stops drawing clouds.
+  * If the LEFT or RIGHT key is released, it sets the left or right movement to false.
+  */
   public void keyReleased() {
+    // For the clouds
     if (keyCode == UP) {
       drawClouds = false;
     }
-
+    // For the butterfly 
     if (keyCode == LEFT) {
-        blnLeftPressed = false;
+      blnLeftPressed = false;
     } 
     else if (keyCode == RIGHT) {
-        blnRightPressed = false;
+      blnRightPressed = false;
     }
-
   }
   
   /**
@@ -90,11 +100,11 @@ public class Sketch extends PApplet {
    * Adds clouds if the UP key is pressed.
    */
   public void keyPressed() {
-    // Change background colour if the 'B' or 'b' key is pressed 
+    // For the background colour
     if (key == 'B' || key == 'b') {
       background(28, 52, 115);
     }
-    // if the UP key is pressed it draws a row of clouds in the sky.
+    // For the clouds 
     if (keyCode == UP) {
       drawClouds = true;
     } 
@@ -112,7 +122,6 @@ public class Sketch extends PApplet {
    * @param butterflyY2 the Y value 
    */
   public void drawButterfly(float butterflyX2, float butterflyY2) {
-   
     stroke(0);
 
     fill(154, 110, 230);
@@ -168,7 +177,6 @@ public class Sketch extends PApplet {
   * @param intY the Y value
   */
   public void drawCloud(int intX, int intY) {
-    
     noStroke();
     fill(255);
     ellipse(intX + 5, intY + 15, 30, 30);
@@ -177,10 +185,35 @@ public class Sketch extends PApplet {
     ellipse(intX - 5, intY, 30, 30);
   }
 
+  /**
+   * Calculates the shapes for the fence. 
+   * @param intX the X value 
+   * @param intY the Y value 
+   */
   public void drawFence(int intX, int intY){
     fill(71, 49, 45);
     rect(intX, intY, 10, 80);
     rect(intX, intY, width, 5);
+  }
 
+  /**
+   * Calculations for the shapes of the mushroom.
+   * @param intX the X value 
+   * @param intY the Y value
+   */
+  public void drawMushroom(int intX, int intY) {
+    // Mushroom stem
+    fill(217, 175, 167); 
+    rect(intX, intY, 40, 100);
+  
+    // Mushroom cap
+    fill(255, 0, 0); 
+    arc(intX + 20, intY, 120, 120, PI, TWO_PI);
+  
+    // White dots on the mushroom cap
+    fill(255); 
+    ellipse(intX, intY - 15, 20, 20);
+    ellipse(intX + 40, intY - 15, 20, 20);
+    ellipse(intX + 20, intY - 45, 20, 20);
   }
 }

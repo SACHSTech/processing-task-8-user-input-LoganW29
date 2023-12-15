@@ -10,7 +10,6 @@ public class Sketch extends PApplet {
    * Called once at the beginning of execution, the size call 
    */
   public void settings() {
-	  // size call 
     size(400, 400);
   }
 
@@ -20,24 +19,29 @@ public class Sketch extends PApplet {
   public void setup() {
     background(12, 122, 232);
   }
+  
+  // Initializing variables 
+  boolean drawClouds = false;
+
+  boolean drawMoon = false; 
 
   boolean blnLeftPressed = false; 
   boolean blnRightPressed = false; 
-  float butterflyX = 200;
-  float butterflyY = 200;
+  float fltButterflyX = 200;
+  float fltButterflyY = 200;
 
   /**
-  * Called repeatedly, anything drawn to the screen goes here
-  */
+   * Called repeatedly, anything drawn to the screen
+   */
   public void draw() {
     // For the butterfly
     if (blnLeftPressed) {
-      butterflyX--;
+      fltButterflyX--;
     }
     if (blnRightPressed) {
-      butterflyX++;
+      fltButterflyX++;
     }
-    drawButterfly(butterflyX, butterflyY);
+    drawButterfly(fltButterflyX, fltButterflyY);
 
     // For the clouds
     if (drawClouds == true) {
@@ -63,40 +67,25 @@ public class Sketch extends PApplet {
   }
 
   /**
-  * Handles the key release events. 
-  * If the UP key is released, it stops drawing clouds.
-  * If the LEFT or RIGHT key is released, it sets the left or right movement to false.
-  */
+   * If the UP key is released, it stops drawing clouds.
+   * If the LEFT or RIGHT key is released, it sets the left or right movement of the butterfly to false.
+   */
   public void keyReleased() {
     // For the clouds
     if (keyCode == UP) {
       drawClouds = false;
     }
     // For the butterfly 
-    if (keyCode == LEFT) {
+    else if (keyCode == LEFT) {
       blnLeftPressed = false;
     } 
     else if (keyCode == RIGHT) {
       blnRightPressed = false;
     }
   }
-  
-  /**
-   * If mouse is pressed a flower is drawn to the screen at the mouseX and mouseY position.
-   */
-  public void mousePressed() {
-    drawFlower(mouseX, mouseY);
-  }
 
   /**
-   * If the mouse is dragged and mouseY is greater than 300, then grass is drawn. 
-   */
-  public void mouseDragged() {
-    drawGrass(mouseX, mouseY);
-  }
-
-  /**
-   * Changes the background colour if he 'B' or 'b' key is pressed. 
+   * Changes the background colour if the 'B' or 'b' key is pressed. 
    * Adds clouds if the UP key is pressed.
    */
   public void keyPressed() {
@@ -105,77 +94,115 @@ public class Sketch extends PApplet {
       background(28, 52, 115);
     }
     // For the clouds 
-    if (keyCode == UP) {
+    else if (keyCode == UP) {
       drawClouds = true;
     } 
-    if (keyCode == LEFT) {
+    // For butterfly movement
+    else if (keyCode == LEFT) {
       blnLeftPressed = true;
     } 
     else if (keyCode == RIGHT) {
       blnRightPressed = true;
     }
   }   
-
+  
   /**
-   * Calculates the shapes that make up the butter fly. 
-   * @param butterflyX2 the X value 
-   * @param butterflyY2 the Y value 
+   * When the mouse is pressed a moon is drawn to (70, 70).
    */
-  public void drawButterfly(float butterflyX2, float butterflyY2) {
-    stroke(0);
-
-    fill(154, 110, 230);
-    ellipse(butterflyX2 + 5, butterflyY2 + 20, 25, 30);
-    ellipse(butterflyX2 - 20, butterflyY2 + 20, 25, 30);
-
-    fill(189, 34, 168);
-    ellipse(butterflyX2 + 5, butterflyY2, 20, 30);
-    ellipse(butterflyX2 - 20, butterflyY2, 20, 30);
-
-    fill(83, 27, 168);
-    ellipse(butterflyX2 - 7, butterflyY2 + 5, 10, 50);
+  public void mousePressed() {
+    drawMoon(70, 70);
+  }
+  
+  /**
+   * When the mouse is released a moon is drawn to (330, 70).
+   */
+  public void mouseReleased() {
+    drawMoon(330, 70);
   }
 
   /**
-   * Calculations to draw the flower.
+   * If the mouse is dragged and mouseY is greater than 300, then grass is drawn. 
+   */
+  public void mouseDragged() {
+    drawGrass(mouseX, mouseY);
+  }
+  
+  /**
+   * If the mouse is clicked a flower is drawn to the screen at the mouseX and mouseY position.
+   */
+  public void mouseClicked() {
+    drawFlower(mouseX, mouseY);
+  }
+
+  /**
+   * When the mouse is moved a mushroom is drawn to the screen. 
+   */
+  public void mouseMoved(){
+    drawMushroom(60, 300);
+  }
+
+  /**
+   * Calculates the shapes that make up the butterfly. 
+   * @param fltButterflyX2 the X value 
+   * @param fltButterflyY2 the Y value 
+   */
+  public void drawButterfly(float fltButterflyX2, float fltButterflyY2) {
+    stroke(0);
+
+    fill(154, 110, 230);
+    ellipse(fltButterflyX2 + 5, fltButterflyY2 + 20, 25, 30);
+    ellipse(fltButterflyX2 - 20, fltButterflyY2 + 20, 25, 30);
+
+    fill(189, 34, 168);
+    ellipse(fltButterflyX2 + 5, fltButterflyY2, 20, 30);
+    ellipse(fltButterflyX2 - 20, fltButterflyY2, 20, 30);
+
+    fill(83, 27, 168);
+    ellipse(fltButterflyX2 - 7, fltButterflyY2 + 5, 10, 50);
+  }
+
+  /**
+   * Calculations of the shapes and colours of the flower.
    * @param intX the X value 
    * @param intY the Y value 
    */
   public void drawFlower(int intX, int intY) {
     stroke(0);
+    
+    // Flower stem
     fill(47, 145, 42);
     rect(intX - 10, intY + 20, 10, 50);
    
+    // Flower Petals 
     fill(232, 12, 188);
     ellipse(intX + 10, intY + 30, 30, 30);
     ellipse(intX - 20, intY + 30, 30, 30);
     ellipse(intX + 10, intY, 30, 30);
     ellipse(intX - 20, intY, 30, 30);
    
+    // Middle of flower 
     fill(219, 76, 29);
     ellipse (intX - 5, intY + 15, 30, 30);
   }
 
   /**
-   * Draws grass where the mouse is dragged if the mouse's Y position is greater than 300. 
+   * Draws green grass where the mouse is dragged, if the mouse's Y position is greater than 300. 
    * @param intX the X value 
    * @param intY the Y value 
    */
   public void drawGrass(float fltX, float fltY) {
     if (mouseY > 300){
-    noStroke();
-    fill(66, 245, 96);
-    ellipse(fltX, fltY, 30, 30);
+      noStroke();
+      fill(66, 245, 96);
+      ellipse(fltX, fltY, 30, 30);
     }
   }
 
-  boolean drawClouds = false;
-
   /**
-  * Calculations for the shapes that make up the cloud. 
-  * @param intX the X value 
-  * @param intY the Y value
-  */
+   * Calculations for the shapes and colours that make up the cloud. 
+   * @param intX the X value 
+   * @param intY the Y value
+   */
   public void drawCloud(int intX, int intY) {
     noStroke();
     fill(255);
@@ -186,7 +213,7 @@ public class Sketch extends PApplet {
   }
 
   /**
-   * Calculates the shapes for the fence. 
+   * Calculates the shapes and colours for the fence. 
    * @param intX the X value 
    * @param intY the Y value 
    */
@@ -197,7 +224,7 @@ public class Sketch extends PApplet {
   }
 
   /**
-   * Calculations for the shapes of the mushroom.
+   * Calculations for the shapes and colours of the mushroom.
    * @param intX the X value 
    * @param intY the Y value
    */
@@ -215,5 +242,22 @@ public class Sketch extends PApplet {
     ellipse(intX, intY - 15, 20, 20);
     ellipse(intX + 40, intY - 15, 20, 20);
     ellipse(intX + 20, intY - 45, 20, 20);
+  }
+
+  /**
+   * Calculations for the shapes and colours included to make the moon.
+   * @param intX the X value
+   * @param intY the Y value
+   */
+  public void drawMoon(int intX, int intY){
+    fill(255);
+    ellipse(intX, intY, 60, 60);
+
+    // Gray spots on moon
+    fill(207, 198, 186);
+    ellipse(intX - 10, intY, 5, 5);
+    ellipse(intX + 5, intY, 5, 5);
+    ellipse(intX, intY - 10, 10, 10);
+    ellipse(intX, intY + 15, 15, 15);
   }
 }

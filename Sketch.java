@@ -5,7 +5,17 @@ import processing.core.PApplet;
  * @author: L. Wong  
  */
 public class Sketch extends PApplet {
-	
+
+  // Initializing variables 
+  boolean drawClouds = false;
+
+  boolean drawMoon = false; 
+
+  boolean blnLeftPressed = false; 
+  boolean blnRightPressed = false; 
+  float fltButterflyX = 200;
+  float fltButterflyY = 200;
+
   /**
    * Called once at the beginning of execution, the size call 
    */
@@ -20,16 +30,6 @@ public class Sketch extends PApplet {
     background(12, 122, 232);
   }
   
-  // Initializing variables 
-  boolean drawClouds = false;
-
-  boolean drawMoon = false; 
-
-  boolean blnLeftPressed = false; 
-  boolean blnRightPressed = false; 
-  float fltButterflyX = 200;
-  float fltButterflyY = 200;
-
   /**
    * Called repeatedly, anything drawn to the screen
    */
